@@ -1,0 +1,585 @@
+_application.py [LINE:551] #INFO     [2025-04-14 23:57:00,043]  Application started
+users_commands.py [LINE:10] #INFO     [2025-04-14 23:58:22,281]  used command start by user id 7189043706
+users_inputs.py [LINE:31] #INFO     [2025-04-14 23:58:43,474]  coordinates (55.667407, 37.854348)
+requests_yandex.py [LINE:17] #INFO     [2025-04-14 23:58:43,740]  made request to API yandex https://api.weather.yandex.ru/v2/forecast?lat=55.667407&lon=37.854348&[lang=ru_RU]
+requests_yandex.py [LINE:31] #INFO     [2025-04-14 23:58:43,740]  data collected from response
+requests_yandex.py [LINE:25] #INFO     [2025-04-14 23:58:43,740]  data saved to yandex_weather.json
+requests_yandex.py [LINE:33] #INFO     [2025-04-14 23:58:43,740]  started collecting weather data from yandex
+requests_yandex.py [LINE:77] #INFO     [2025-04-14 23:58:43,755]  json yandex_weather.json loaded
+requests_yandex.py [LINE:68] #INFO     [2025-04-14 23:58:43,755]  weather from yandex: {'url': 'https://yandex.ru/pogoda/?lat=55.667407&lon=37.854348', 'location': {}, 'fact': {'temp': 8, 'feels_like': 4, 'condition': 'clear', 'pressure_mm': 753, 'humidity': 59, 'wind_speed': 2.6}, 'evening': {'temp': 11, 'condition': 'cloudy'}, 'morning': {'temp': 6, 'condition': 'cloudy'}, 'night': {'temp': 1, 'condition': 'partly-cloudy'}, 'day': {'temp': 12, 'condition': 'cloudy'}}
+users_inputs.py [LINE:10] #INFO     [2025-04-14 23:59:34,339]  echo to user id 7189043706
+users_commands.py [LINE:21] #INFO     [2025-04-14 23:59:39,566]  used command help by user id 7189043706
+_application.py [LINE:1596] #ERROR    [2025-04-14 23:59:39,732]  No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_application.py", line 1070, in process_update
+    await coroutine
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_handler.py", line 143, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\tsyga\Documents\pogoda\bot\handles\users_commands.py", line 22, in help_command
+    await context.bot.send_message(chat_id=update.effective_chat.id, text=f"""
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 2492, in send_message
+    return await super().send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 316, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 746, in send_message
+    return await self._send_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 490, in _send_message
+    result = await super()._send_message(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 497, in _send_message
+    result = await self._post(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 404, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 308, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 435, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 167, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 330, in _request_wrapper
+    raise BadRequest(message)
+telegram.error.BadRequest: Can't parse entities: unexpected end of name token at byte offset 40
+users_commands.py [LINE:10] #INFO     [2025-04-15 00:01:38,238]  used command start by user id 738629641
+users_inputs.py [LINE:31] #INFO     [2025-04-15 00:01:53,627]  coordinates (55.724784, 37.456082)
+requests_yandex.py [LINE:17] #INFO     [2025-04-15 00:01:53,902]  made request to API yandex https://api.weather.yandex.ru/v2/forecast?lat=55.724784&lon=37.456082&[lang=ru_RU]
+requests_yandex.py [LINE:31] #INFO     [2025-04-15 00:01:53,903]  data collected from response
+requests_yandex.py [LINE:25] #INFO     [2025-04-15 00:01:53,908]  data saved to yandex_weather.json
+requests_yandex.py [LINE:33] #INFO     [2025-04-15 00:01:53,908]  started collecting weather data from yandex
+requests_yandex.py [LINE:77] #INFO     [2025-04-15 00:01:53,917]  json yandex_weather.json loaded
+requests_yandex.py [LINE:68] #INFO     [2025-04-15 00:01:53,917]  weather from yandex: {'url': 'https://yandex.ru/pogoda/?lat=55.724784&lon=37.456082', 'location': {}, 'fact': {'temp': 10, 'feels_like': 6, 'condition': 'clear', 'pressure_mm': 751, 'humidity': 60, 'wind_speed': 3}, 'evening': {'temp': 15, 'condition': 'overcast'}, 'morning': {'temp': 11, 'condition': 'overcast'}, 'night': {'temp': 9, 'condition': 'cloudy'}, 'day': {'temp': 17, 'condition': 'cloudy'}}
+users_inputs.py [LINE:10] #INFO     [2025-04-15 00:02:18,562]  echo to user id 738629641
+_updater.py [LINE:616] #ERROR    [2025-04-15 04:27:32,018]  Error while getting Updates: httpx HTTPError: [Errno 11001] getaddrinfo failed
+_application.py [LINE:1596] #ERROR    [2025-04-15 04:27:32,020]  No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 186, in connect_tcp
+    addr_obj = ip_address(remote_host)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\ipaddress.py", line 54, in ip_address
+    raise ValueError(f'{address!r} does not appear to be an IPv4 or IPv6 address')
+ValueError: 'api.telegram.org' does not appear to be an IPv4 or IPv6 address
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 10, in map_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 111, in connect_tcp
+    stream: anyio.abc.ByteStream = await anyio.connect_tcp(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 189, in connect_tcp
+    gai_res = await getaddrinfo(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 962, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 253, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 237, in handle_async_request
+    response = await connection.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 86, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 63, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 111, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\auto.py", line 29, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 109, in connect_tcp
+    with map_exceptions(exc_map):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc)
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 183, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1620, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1648, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 352, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 603, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 329, in polling_action_cb
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 314, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 526, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 316, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 3479, in get_updates
+    await self._post(
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 404, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 308, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 435, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 167, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 290, in _request_wrapper
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 276, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 204, in do_request
+    raise NetworkError(f"httpx HTTPError: {err}") from err
+telegram.error.NetworkError: httpx HTTPError: [Errno 11001] getaddrinfo failed
+_updater.py [LINE:616] #ERROR    [2025-04-15 12:56:49,929]  Error while getting Updates: httpx HTTPError: [Errno 11001] getaddrinfo failed
+_application.py [LINE:1596] #ERROR    [2025-04-15 12:56:49,929]  No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 186, in connect_tcp
+    addr_obj = ip_address(remote_host)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\ipaddress.py", line 54, in ip_address
+    raise ValueError(f'{address!r} does not appear to be an IPv4 or IPv6 address')
+ValueError: 'api.telegram.org' does not appear to be an IPv4 or IPv6 address
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 10, in map_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 111, in connect_tcp
+    stream: anyio.abc.ByteStream = await anyio.connect_tcp(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 189, in connect_tcp
+    gai_res = await getaddrinfo(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 962, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 253, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 237, in handle_async_request
+    response = await connection.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 86, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 63, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 111, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\auto.py", line 29, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 109, in connect_tcp
+    with map_exceptions(exc_map):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc)
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 183, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1620, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1648, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 352, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 603, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 329, in polling_action_cb
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 314, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 526, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 316, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 3479, in get_updates
+    await self._post(
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 404, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 308, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 435, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 167, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 290, in _request_wrapper
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 276, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 204, in do_request
+    raise NetworkError(f"httpx HTTPError: {err}") from err
+telegram.error.NetworkError: httpx HTTPError: [Errno 11001] getaddrinfo failed
+_updater.py [LINE:616] #ERROR    [2025-04-15 12:56:51,434]  Error while getting Updates: httpx HTTPError: [Errno 11001] getaddrinfo failed
+_application.py [LINE:1596] #ERROR    [2025-04-15 12:56:51,434]  No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 186, in connect_tcp
+    addr_obj = ip_address(remote_host)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\ipaddress.py", line 54, in ip_address
+    raise ValueError(f'{address!r} does not appear to be an IPv4 or IPv6 address')
+ValueError: 'api.telegram.org' does not appear to be an IPv4 or IPv6 address
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 10, in map_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 111, in connect_tcp
+    stream: anyio.abc.ByteStream = await anyio.connect_tcp(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 189, in connect_tcp
+    gai_res = await getaddrinfo(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 962, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 253, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 237, in handle_async_request
+    response = await connection.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 86, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 63, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 111, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\auto.py", line 29, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 109, in connect_tcp
+    with map_exceptions(exc_map):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc)
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 183, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1620, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1648, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 352, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 603, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 329, in polling_action_cb
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 314, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 526, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 316, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 3479, in get_updates
+    await self._post(
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 404, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 308, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 435, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 167, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 290, in _request_wrapper
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 276, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 204, in do_request
+    raise NetworkError(f"httpx HTTPError: {err}") from err
+telegram.error.NetworkError: httpx HTTPError: [Errno 11001] getaddrinfo failed
+_updater.py [LINE:616] #ERROR    [2025-04-15 12:56:53,687]  Error while getting Updates: httpx HTTPError: [Errno 11001] getaddrinfo failed
+_application.py [LINE:1596] #ERROR    [2025-04-15 12:56:53,687]  No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 186, in connect_tcp
+    addr_obj = ip_address(remote_host)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\ipaddress.py", line 54, in ip_address
+    raise ValueError(f'{address!r} does not appear to be an IPv4 or IPv6 address')
+ValueError: 'api.telegram.org' does not appear to be an IPv4 or IPv6 address
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 10, in map_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 111, in connect_tcp
+    stream: anyio.abc.ByteStream = await anyio.connect_tcp(
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\anyio\_core\_sockets.py", line 189, in connect_tcp
+    gai_res = await getaddrinfo(
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\socket.py", line 962, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 253, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection_pool.py", line 237, in handle_async_request
+    response = await connection.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 86, in handle_async_request
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 63, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_async\connection.py", line 111, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\auto.py", line 29, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\backends\asyncio.py", line 109, in connect_tcp
+    with map_exceptions(exc_map):
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc)
+httpcore.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 183, in do_request
+    res = await self._client.request(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1620, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1648, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 352, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\httpx\_transports\default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 603, in _network_loop_retry
+    if not await action_cb():
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 329, in polling_action_cb
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_updater.py", line 314, in polling_action_cb
+    updates = await self.bot.get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 526, in get_updates
+    updates = await super().get_updates(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 316, in decorator
+    result = await func(*args, **kwargs)  # skipcq: PYL-E1102
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 3479, in get_updates
+    await self._post(
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 404, in _post
+    return await self._do_post(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\ext\_extbot.py", line 308, in _do_post
+    return await super()._do_post(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\_bot.py", line 435, in _do_post
+    return await request.post(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 167, in post
+    result = await self._request_wrapper(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 290, in _request_wrapper
+    raise exc
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_baserequest.py", line 276, in _request_wrapper
+    code, payload = await self.do_request(
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\tsyga\Documents\pogoda\.venv\Lib\site-packages\telegram\request\_httpxrequest.py", line 204, in do_request
+    raise NetworkError(f"httpx HTTPError: {err}") from err
+telegram.error.NetworkError: httpx HTTPError: [Errno 11001] getaddrinfo failed
+users_commands.py [LINE:10] #INFO     [2025-04-15 13:15:18,520]  used command start by user id 738629641
+users_inputs.py [LINE:31] #INFO     [2025-04-15 13:15:41,059]  coordinates (55.203313, 37.558382)
+requests_yandex.py [LINE:17] #INFO     [2025-04-15 13:15:41,344]  made request to API yandex https://api.weather.yandex.ru/v2/forecast?lat=55.203313&lon=37.558382&[lang=ru_RU]
+requests_yandex.py [LINE:31] #INFO     [2025-04-15 13:15:41,345]  data collected from response
+requests_yandex.py [LINE:25] #INFO     [2025-04-15 13:15:41,350]  data saved to yandex_weather.json
+requests_yandex.py [LINE:33] #INFO     [2025-04-15 13:15:41,351]  started collecting weather data from yandex
+requests_yandex.py [LINE:77] #INFO     [2025-04-15 13:15:41,369]  json yandex_weather.json loaded
+requests_yandex.py [LINE:68] #INFO     [2025-04-15 13:15:41,369]  weather from yandex: {'url': 'https://yandex.ru/pogoda/?lat=55.203313&lon=37.558382', 'location': {}, 'fact': {'temp': 16, 'feels_like': 11, 'condition': 'cloudy', 'pressure_mm': 749, 'humidity': 31, 'wind_speed': 5.5}, 'evening': {'temp': 15, 'condition': 'partly-cloudy'}, 'morning': {'temp': 10, 'condition': 'overcast'}, 'night': {'temp': 6, 'condition': 'cloudy'}, 'day': {'temp': 17, 'condition': 'cloudy'}}
+_application.py [LINE:582] #INFO     [2025-04-15 13:33:09,167]  Application is stopping. This might take a moment.
+_application.py [LINE:607] #INFO     [2025-04-15 13:33:09,167]  Application.stop() complete
