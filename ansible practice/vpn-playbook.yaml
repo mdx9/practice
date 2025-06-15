@@ -1,0 +1,142 @@
+---
+- name: Configure server with Docker, SSH, Outline and other tools
+  hosts: vpn_host
+  become: true
+  vars_files:
+    - vault.yaml
+  tasks:
+
+    - name: Install essential packages
+      apt:
+        name:
+          - sudo
+          - fail2ban
+          - nano
+          - ufw
+        state: present
+        update_cache: yes
+
+    - name: Install Docker
+      block:
+        - name: Install dependencies
+          apt:
+            name:
+              - apt-transport-https
+              - ca-certificates
+              - curl
+              - gnupg
+              - lsb-release
+            state: present
+            update_cache: yes
+
+        - name: Add Docker GPG key if not exists
+          command: bash -c "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker.gpg"
+          args:
+            creates: /usr/share/keyrings/docker.gpg
+
+        - name: Add Docker repository
+          apt_repository:
+            repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+            state: present
+            update_cache: yes
+
+        - name: Install Docker packages
+          apt:
+            name:
+              - docker-ce
+              - docker-ce-cli
+              - containerd.io
+            state: present
+            update_cache: yes
+      when: ansible_os_family == 'Debian'
+      tags: ['docker']
+
+    - name: Configure UFW
+      block:
+        - name: Allow required ports
+          ufw:
+            rule: allow
+            port: "{{ item.port }}"
+            proto: "{{ item.proto | default('tcp') }}"
+          loop:
+            - { port: "{{ ssh_port }}", proto: "tcp" }
+            - { port: "{{ outline_port_1 }}", proto: "tcp" }
+            - { port: "{{ outline_port_2 }}", proto: "udp" }
+            - { port: "443", proto: "tcp" }
+
+        - name: Enable UFW
+          ufw:
+            state: enabled
+            policy: deny
+
+    - name: Configure SSH
+      block:
+        - name: Change SSH port
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: '^#?Port'
+            line: 'Port {{ ssh_port }}'
+
+        - name: Secure SSH config
+          lineinfile:
+            path: /etc/ssh/sshd_config
+            regexp: "^{{ item.regexp }}"
+            line: "{{ item.line }}"
+          loop:
+            - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+            - { regexp: '^#?PubkeyAuthentication', line: 'PubkeyAuthentication yes' }
+            - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
+      notify: Restart SSH
+
+    - name: Create new user
+      user:
+        name: "{{ new_username }}"
+        create_home: yes
+        shell: /bin/bash
+        password: "{{ new_password }}"
+
+    - name: Add user to groups
+      user:
+        name: "{{ new_username }}"
+        groups:
+          - sudo
+          - docker
+        append: yes
+
+    - name: Setup SSH keys
+      authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ admin_ssh_key }}"
+      loop:
+        - "{{ ansible_user }}"
+        - "{{ new_username }}"
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Outline Server
+      shell: bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)"
+      args:
+        executable: /bin/bash
+      register: outline_output
+      failed_when: outline_output.rc != 0
+
+    - name: Send notification via Telegram
+      uri:
+        url: "https://api.telegram.org/bot{{ telegram_token }}/sendMessage"
+        method: POST
+        body_format: json
+        body:
+          chat_id: "{{ chat_id }}"
+          text: "Outline Data:\n{{ outline_output.stdout }}"
+      when: outline_output.stdout is defined
+
+  handlers:
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
