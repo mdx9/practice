@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nginx DevOps Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .links a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐳 Nginx DevOps Project</h1>
+        <p>Простой проект для изучения Docker и мониторинга</p>
+        
+        <div class="card">
+            <h2>✅ Сервис работает</h2>
+            <p>Время: <span id="time"></span></p>
+        </div>
+
+        <div class="card">
+            <h3>📚 Что изучаем:</h3>
+            <ul style="text-align: left;">
+                <li>Docker и контейнеризация</li>
+                <li>Nginx веб-сервер</li>
+                <li>Docker Compose</li>
+                <li>Базовый мониторинг</li>
+            </ul>
+        </div>
+
+        <div class="links">
+            <a href="/health">Health Check</a>
+            <a href="/status">Nginx Status</a>
+            <a href="http://localhost:3000" target="_blank">Grafana</a>
+            <a href="http://localhost:9090" target="_blank">Prometheus</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString('ru-RU');
+    </script>
+</body>
+</html>
