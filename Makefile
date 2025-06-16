@@ -13,11 +13,11 @@ help:
 
 # Собрать образ
 build:
-	docker-compose build
+	docker compose build
 
 # Запустить сервисы
 up:
-	docker-compose up -d
+	docker compose up -d
 	@echo "Сервисы запущены!"
 	@echo "Nginx: http://localhost"
 	@echo "Grafana: http://localhost:3000 (admin/admin)"
@@ -25,15 +25,15 @@ up:
 
 # Остановить сервисы
 down:
-	docker-compose down
+	docker compose down
 
 # Показать логи
 logs:
-	docker-compose logs -f nginx
+	docker compose logs -f nginx
 
 # Проверить статус
 status:
-	docker-compose ps
+	docker compose ps
 	@echo "\nПроверка health check:"
 	@curl -s http://localhost/health || echo "Сервис недоступен"
 
@@ -43,5 +43,5 @@ test:
 
 # Очистить ресурсы
 clean:
-	docker-compose down -v
+	docker compose down -v
 	docker system prune -f
