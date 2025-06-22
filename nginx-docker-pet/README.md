@@ -1,93 +1,168 @@
+# 🚀 DevOps Pet Project by MDX 
 
-🛠️Pet-Project: Nginx + Docker
----
-**Контейнеризованное веб-приложение с мониторингом** на базе:  
-- **Nginx** — веб-сервер и reverse proxy  
-- **Prometheus** — сбор метрик  
-- **Grafana** — визуализация данных  
----
-# Используемые технологии 
-### 🐳 **Docker & Контейнеризация**  
-- Оптимизация образов через `multi-stage` сборку  
 
-### 🧩 **Оркестрация**  
-- Развертывание стека через `docker-compose.yml`  
-- Связь контейнеров (Nginx ↔ Prometheus ↔ Grafana) 
+Этот проект демонстрирует комплексное решение, включающее контейнеризацию, мониторинг, базу данных, API и полную автоматизацию развертывания с помощью Ansible.
 
-### 📊 **Мониторинг**  
-- Интеграция **Prometheus** для метрик 
-- Создание дашбордов в **Grafana**
 
-### ⚙️ **Автоматизация**  
-- **Makefile** для стандартных задач (`make build`, `make up`)  
-- Скрипты для тестирования доступности `bash`  
+![Снимок экрана 2025-06-22 213657](https://github.com/user-attachments/assets/89acda72-2754-4daf-a7e3-90cdf28247b0)
 
-# 📁 Структура проекта 
+### 🏗️ **Архитектура и инфраструктура**
+- ✅ **Multi-stage Docker контейнеры** с оптимизацией образов
+- ✅ **Docker Compose** для оркестрации всех сервисов
+- ✅ **Nginx** как reverse proxy и веб-сервер
+- ✅ **PostgreSQL 15** база данных с инициализацией
+- ✅ **Flask API** для взаимодействия с БД
+- ✅ **Health checks** для всех сервисов
 
-```bash
-nginx-docker-pet/
-├── 📄 README.md          # 
-├── 🐳 Dockerfile           # Конфигурация Docker-образа
-├── 🧩 docker-compose.yml   # Настройка сервисов
-├── ⚙️ Makefile            # Автоматизация команд
-├── 🖥️ nginx/              # 
-│   ├── 📄 nginx.conf     # Rонфиг Nginx
-│   └── 📂 html/          
-│       ├── 📄 index.html # Главная страница
-│       └── 📄 health.html # Health-check страница
-├── 📈 prometheus/        # Мониторинг
-│   └── 📄 prometheus.yml 
-└── 🛠️ scripts/           
-    └── 📜 test.sh        # Тестовый скрипт
+### 📊 **Мониторинг и наблюдаемость**
+- ✅ **Prometheus** для сбора метрик
+- ✅ **Grafana** для визуализации данных
+- ✅ **PostgreSQL Exporter** для мониторинга БД
+- ✅ **Nginx Status** для мониторинга веб-сервера
+- ✅ **Логирование** всех сервисов
+
+### 🤖 **Автоматизация с Ansible**
+- ✅ **Полная автоматизация развертывания**
+- ✅ **Ansible Roles** для модульной структуры
+- ✅ **Inventory management** для разных окружений
+- ✅ **Idempotent playbooks** для надежного развертывания
+- ✅ **Проверка синтаксиса** и dry-run режим
+
+### 🗄️ **База данных и бэкапы**
+- ✅ **PostgreSQL** с автоматической инициализацией
+- ✅ **Мониторинг производительности БД**
+- ✅ **Система логирования посещений**
+
+### 🔧 **DevOps практики**
+- ✅ **Makefile** для упрощения команд
+- ✅ **Environment Variables** для конфигурации
+- ✅ **Automated Testing** с проверкой всех сервисов
+- ✅ **CI/CD готовность** структуры проекта
+
+## 🏛️ Архитектура проекта
+
 ```
-## 🚀 Инструкции по запуску
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Nginx (80)    │◄──►│   Flask API      │◄──►│ PostgreSQL      │
+│   Web Server    │    │   (5000)         │    │ Database (5432) │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+         │                       │                       │
+         │              ┌─────────────────┐              │
+         │              │  Prometheus     │              │
+         └──────────────►│  Monitoring     │◄─────────────┘
+                        │  (9090)         │
+                        └─────────────────┘
+                                 │
+                        ┌─────────────────┐
+                        │   Grafana       │
+                        │   Dashboard     │
+                        │   (3000)        │
+                        └─────────────────┘
+```
 
-### 1. Подготовка окружения
+## 🗂️ Структура проекта
+
+```
+nginx-devops-project/
+├── 📄 README.md
+├── 🐳 Dockerfile                    # Multi-stage Nginx контейнер
+├── 📋 docker-compose.yml            # Оркестрация всех сервисов
+├── ⚙️ Makefile                      # Команды управления
+├── 🌐 nginx/
+│   ├── nginx.conf                   # Конфигурация Nginx
+│   └── html/                        # Веб-страницы
+│       ├── index.html               # Главная страница
+│       └── health.html              # Health check страница
+├── 🐍 app/
+│   ├── app.py                       # Flask API
+│   ├── Dockerfile                   # API контейнер
+│   └── requirements.txt             # Python зависимости
+├── 🗄️ database/
+│   ├── init.sql                     # Инициализация БД
+├── 📊 prometheus/
+│   └── prometheus.yml               # Конфигурация мониторинга
+├── 📈 grafana/
+│   ├── dashboards/                  # Преднастроенные дашборды
+│   └── datasources/                 # Источники данных
+├── 🤖 ansible/
+│   ├── ansible.cfg                  # Конфигурация Ansible
+│   ├── inventory/hosts              # Инвентарь серверов
+│   ├── playbooks/                   # Основные playbooks
+│   │   ├── site.yml                 # Главный playbook
+│   │   ├── deploy.yml               # Развертывание
+│   ├── roles/                       # Ansible роли
+│   │   ├── docker/                  # Роль установки Docker
+│   │   ├── monitoring/              # Роль мониторинга
+│   │   └── database/                # Роль базы данных
+│   └── group_vars/all.yml           # Переменные
+└── 📜 scripts/
+    ├── test.sh                      # Скрипт тестирования
+    ├── backup.sh                    # Скрипт бэкапа БД
+    └── deploy.sh                    # Скрипт развертывания
+```
+
+## 🚀 Быстрый старт
+
+  
+### 1️⃣ Клонирование и подготовка
 ```bash
-# Клонировать репозиторий проекта
 git clone https://github.com/mdx9/nginx-docker-pet.git
 cd nginx-docker-pet
-
-# Дать права на выполнение скриптов
-chmod +x scripts/test.sh
+chmod +x scripts/*.sh
 ```
 
-### 2. Запуск сервисов
+### 2️⃣ Локальный запуск
+```bash
+# Сборка и запуск всех сервисов
+make build
+make up
 
-Собрать контейнеры и запустить сервисы
-```make build && make up```
+# Проверка статуса
+make status
 
-Доступные URL
+# Запуск тестов
+make test
 ```
-Сайт: http://localhost
-Health Check: http://localhost/health
-Nginx Status: http://localhost/status
-Grafana: http://localhost:3000 (admin/admin)
-Prometheus: http://localhost:9090
+
+### 3️⃣ Автоматическое развертывание
+```bash
+# Развертывание через Ansible
+make deploy
+
+# Или поэтапно
+make ansible-check  # Проверка синтаксиса
+make ansible-deploy # Развертывание
 ```
-### 3. Опции Makefile
-Посмотреть все опции
-```make help ```
 
-Посмотреть логи
-```make logs```
+## 🔗 Доступные сервисы
 
-Остановить сервисы
-```make down```
+После запуска проекта доступны:
 
- Очистить все
-```make clean```
+| Сервис | URL | Описание |
+|--------|-----|----------|
+| 🌐 **Веб-сайт** | http://localhost | Главная страница |
+| 💚 **Health Check** | http://localhost/health | Проверка здоровья |
+| 📊 **API Stats** | http://localhost:5000/api/stats | Статистика API |
+| 📈 **Grafana** | http://localhost:3000 | Дашборды (admin/admin) |
+| 🔍 **Prometheus** | http://localhost:9090 | Метрики |
+| 🗄️ **PostgreSQL** | localhost:5432 | База данных |
 
-Проверить статус
-```make status```
+## 🛠️ Доступные команды
 
-Запустить тесты
-```make test```
+```bash
+# Основные команды
+make build      # 🔨 Собрать Docker образы
+make up         # ▶️ Запустить все сервисы
+make down       # ⏹️ Остановить сервисы
+make status     # 📊 Статус всех сервисов
+make logs       # 📋 Просмотр логов
+make test       # 🧪 Запуск тестов
 
----
+# Обслуживание
+make clean      # 🧹 Очистить Docker ресурсы
 
-### 4. образ есть в 🐳 Docker HUB 🐳
-```docker
-docker push mdx9/nginx-devops-project:v3
+# Ansible команды
+make deploy           # 🚀 Полное развертывание
+make ansible-check    # ✅ Проверка playbooks
+make ansible-deploy   # 🤖 Развертывание через Ansible
 ```
-![image](https://github.com/user-attachments/assets/4048fbd3-3cad-4f2c-8285-dbe5483cbf10)
