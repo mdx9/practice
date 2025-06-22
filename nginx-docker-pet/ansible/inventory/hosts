@@ -1,0 +1,10 @@
+[local]
+localhost ansible_connection=local
+
+[devops_servers]
+devops-vm ansible_host=127.0.0.1 ansible_port=22 ansible_user=vagrant
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+docker_compose_version=2.21.0
+project_path=/opt/nginx-devops-project

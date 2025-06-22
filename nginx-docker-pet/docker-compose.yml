@@ -1,6 +1,49 @@
-
-
 services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: devops_db
+      POSTGRES_USER: devops_user
+      POSTGRES_PASSWORD: devops_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./database/backup:/backup
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devops_user -d devops_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # Python Flask API
+  api:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: flask-api
+    environment:
+      DATABASE_URL: postgresql://devops_user:devops_password@postgres:5432/devops_db
+      FLASK_ENV: production
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+    volumes:
+      - ./app:/app
+    restart: unless-stopped
+
+  # Nginx (обновленный)
   nginx:
     build: .
     container_name: nginx-app
@@ -9,42 +52,68 @@ services:
     volumes:
       - ./nginx/html:/usr/share/nginx/html:ro
       - nginx_logs:/var/log/nginx
+    depends_on:
+      - api
     networks:
       - app-network
     restart: unless-stopped
 
+  # Prometheus (расширенный)
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
     ports:
-      - "0.0.0.0:9090:9090"
+      - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/etc/prometheus/console_libraries'
       - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
     networks:
       - app-network
     restart: unless-stopped
 
+  # Grafana (с преднастроенными дашбордами)
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     ports:
-      - "0.0.0.0:3000:3000"
+      - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # PostgreSQL Exporter для мониторинга БД
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://devops_user:devops_password@postgres:5432/devops_db?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
 
 volumes:
+  postgres_data:
   nginx_logs:
   grafana_data:
+  prometheus_data:
 
 networks:
   app-network:
