@@ -1,0 +1,23 @@
+- name: Install PostgreSQL client
+  package:
+    name: postgresql-client
+    state: present
+
+- name: Create backup script
+  template:
+    src: backup.sh.j2
+    dest: /usr/local/bin/postgres-backup.sh
+    mode: '0755'
+
+- name: Create backup cron job
+  cron:
+    name: "PostgreSQL backup"
+    minute: "0"
+    hour: "2"
+    job: "/usr/local/bin/postgres-backup.sh"
+    user: "{{ project_user }}"
+
+- name: Create log rotation for database backups
+  template:
+    src: postgres-backup.logrotate.j2
+    dest: /etc/logrotate.d/postgres-backup

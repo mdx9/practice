@@ -1,0 +1,110 @@
+- name: Deploy DevOps Project
+  hosts: devops_servers
+  become: yes
+  vars:
+    project_name: nginx-devops-project
+    project_user: devops
+    project_path: "/opt/{{ project_name }}"
+    backup_path: "/backup/{{ project_name }}"
+    
+  tasks:
+    - name: Include variables
+      include_vars: ../group_vars/all.yml
+
+    - name: Create project user
+      user:
+        name: "{{ project_user }}"
+        shell: /bin/bash
+        home: "/home/{{ project_user }}"
+        create_home: yes
+        groups: docker
+        append: yes
+
+    - name: Create project directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ project_user }}"
+        group: "{{ project_user }}"
+        mode: '0755'
+      loop:
+        - "{{ project_path }}"
+        - "{{ backup_path }}"
+        - "{{ project_path }}/logs"
+
+    - name: Install system dependencies
+      package:
+        name:
+          - git
+          - curl
+          - wget
+          - htop
+          - vim
+          - postgresql-client
+        state: present
+
+    - name: Include Docker role
+      include_role:
+        name: docker
+
+    - name: Include Database role
+      include_role:
+        name: database
+
+    - name: Include Monitoring role
+      include_role:
+        name: monitoring
+
+    - name: Copy project files
+      synchronize:
+        src: ../../
+        dest: "{{ project_path }}/"
+        rsync_opts:
+          - "--exclude=ansible/"
+          - "--exclude=.git/"
+          - "--exclude=__pycache__/"
+        delete: yes
+      notify: restart services
+
+    - name: Set project ownership
+      file:
+        path: "{{ project_path }}"
+        owner: "{{ project_user }}"
+        group: "{{ project_user }}"
+        recurse: yes
+
+    - name: Copy environment file
+      template:
+        src: ../templates/.env.j2
+        dest: "{{ project_path }}/.env"
+        owner: "{{ project_user }}"
+        group: "{{ project_user }}"
+        mode: '0600'
+
+    - name: Build and start services
+      shell: |
+        cd {{ project_path }}
+        make build
+        make up
+      become_user: "{{ project_user }}"
+      notify: wait for services
+
+  handlers:
+    - name: restart services
+      shell: |
+        cd {{ project_path }}
+        make down
+        make up
+      become_user: "{{ project_user }}"
+
+    - name: wait for services
+      wait_for:
+        port: "{{ item }}"
+        host: localhost
+        delay: 10
+      loop:
+        - 80
+        - 5000
+        - 5432
+        - 3000
+        - 9090
