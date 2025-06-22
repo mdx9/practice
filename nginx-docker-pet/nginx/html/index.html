@@ -210,8 +210,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🐳 Nginx DevOps Project</h1>
-            <p>Pet Project with PostgreSQL, Monitoring & Ansible</p>
+            <h1>🐳  DevOps Project</h1>
+            <p>Pet Project by MDX</p>
             <p>Время: <span id="currentTime"></span></p>
         </div>
 
@@ -256,8 +256,8 @@
             <div class="card">
                 <h3>🔧 API Endpoints</h3>
                 <div class="api-section">
-                    <button class="api-button" onclick="testEndpoint('/api/health')">Health Check</button>
-                    <button class="api-button" onclick="testEndpoint('/api/stats')">Статистика</button>
+                    <button class="api-button" onclick="testEndpoint('/health')">Health Check</button>
+                    <button class="api-button" onclick="testEndpoint('/stats')">Статистика</button>
                     <button class="api-button" onclick="testEndpoint('/health')">Nginx Health</button>
                     <button class="api-button" onclick="testEndpoint('/status')">Nginx Status</button>
                 </div>
@@ -297,13 +297,13 @@
             <a href="/status" target="_blank">
                 <span>📊</span> Nginx Status
             </a>
-            <a href="http://localhost:3000" target="_blank">
+            <a href="0.0.0.0:3000" target="_blank">
                 <span>📈</span> Grafana
             </a>
-            <a href="http://localhost:9090" target="_blank">
+            <a href="0.0.0.0:9090" target="_blank">
                 <span>🎯</span> Prometheus
             </a>
-            <a href="http://localhost:5000/api/health" target="_blank">
+            <a href="0.0.0.0:5000/health" target="_blank">
                 <span>🔧</span> API Health
             </a>
         </div>
@@ -331,7 +331,7 @@
             responseDiv.innerHTML = '<div class="loading"></div> Записываем посещение...';
 
             try {
-                const response = await fetch('/api/visit', {
+                const response = await fetch('/visit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -358,7 +358,7 @@
             responseDiv.innerHTML = '<div class="loading"></div> Загружаем статистику...';
 
             try {
-                const response = await fetch('/api/stats');
+                const response = await fetch('/stats');
                 const data = await response.json();
                 
                 if (response.ok) {
@@ -392,7 +392,7 @@
             responseDiv.innerHTML = '<div class="loading"></div> Проверяем подключение к БД...';
 
             try {
-                const response = await fetch('/api/health');
+                const response = await fetch('/health');
                 const data = await response.json();
                 
                 if (response.ok) {
@@ -486,7 +486,7 @@
             
             // Проверка API
             try {
-                const apiResponse = await fetch('/api/health');
+                const apiResponse = await fetch('/health');
                 const apiData = await apiResponse.json();
                 document.getElementById('apiStatus').textContent = apiResponse.ok ? '✅ Работает' : '❌ Недоступен';
                 document.getElementById('dbStatus').textContent = 
