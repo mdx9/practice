@@ -3,71 +3,549 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nginx DevOps Project</title>
+    <title>Nginx DevOps Project с PostgreSQL</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             min-height: 100vh;
+            padding: 20px;
         }
+
         .container {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
         }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
         .card {
             background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #28a745;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .status-indicator.loading {
+            background-color: #ffc107;
+        }
+
+        .status-indicator.error {
+            background-color: #dc3545;
+        }
+
+        .api-section {
             margin: 20px 0;
         }
+
+        .api-button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .api-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .api-button.primary {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border-color: #28a745;
+        }
+
+        .response-area {
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
         .links a {
             color: #fff;
             text-decoration: none;
-            margin: 10px;
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
         }
+
         .links a:hover {
-            background: rgba(255,255,255,0.3);
+            background: linear-gradient(45deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .stats-table th,
+        .stats-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stats-table th {
+            background: rgba(255,255,255,0.1);
+            font-weight: bold;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            background: rgba(255,107,107,0.1);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .success-message {
+            color: #51cf66;
+            background: rgba(81,207,102,0.1);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #51cf66;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🐳 Nginx DevOps Project</h1>
-        <p>Pet Project by MDX</p>
-        
-        <div class="card">
-            <h2>✅ Сервис работает</h2>
-            <p>Время: <span id="time"></span></p>
+        <div class="header">
+            <h1>🐳 Nginx DevOps Project</h1>
+            <p>Pet Project with PostgreSQL, Monitoring & Ansible</p>
+            <p>Время: <span id="currentTime"></span></p>
         </div>
 
-        <div class="card">
-            <h3>📚 Кнопки:</h3>
-            <ul style="text-align: left;">
-                <li>Health Check = Проверки</li>
-                <li>Nginx Status = Статистика подключений</li>
-                <li>Grafana = визуализация мониторинга</li>
-                <li>Prometheus = сбор метрик</li>
-            </ul>
+        <div class="grid">
+            <!-- Статус системы -->
+            <div class="card">
+                <h3>
+                    <span class="status-indicator" id="systemStatus"></span>
+                    Статус системы
+                </h3>
+                <div id="systemInfo">
+                    <p>🌐 <strong>Nginx:</strong> <span id="nginxStatus">Проверка...</span></p>
+                    <p>🔧 <strong>API:</strong> <span id="apiStatus">Проверка...</span></p>
+                    <p>🗄️ <strong>PostgreSQL:</strong> <span id="dbStatus">Проверка...</span></p>
+                    <p>📊 <strong>Мониторинг:</strong> <span id="monitoringStatus">Проверка...</span></p>
+                </div>
+            </div>
+
+            <!-- Работа с БД -->
+            <div class="card">
+                <h3>🗄️ Демонстрация PostgreSQL</h3>
+                <div class="api-section">
+                    <button class="api-button primary" onclick="logVisit()">📝 Записать посещение</button>
+                    <button class="api-button" onclick="getStats()">📊 Получить статистику</button>
+                    <button class="api-button" onclick="checkDbHealth()">🔍 Проверить БД</button>
+                </div>
+                <div id="dbResponse" class="response-area" style="display: none;"></div>
+            </div>
+
+            <!-- Статистика посещений -->
+            <div class="card">
+                <h3>📈 Статистика посещений</h3>
+                <div id="visitStats">
+                    <p><strong>Всего посещений:</strong> <span id="totalVisits">Загрузка...</span></p>
+                    <p><strong>Последние визиты:</strong></p>
+                    <div id="recentVisits">Загружаем данные...</div>
+                </div>
+                <button class="api-button" onclick="refreshStats()">🔄 Обновить статистику</button>
+            </div>
+
+            <!-- API тестирование -->
+            <div class="card">
+                <h3>🔧 API Endpoints</h3>
+                <div class="api-section">
+                    <button class="api-button" onclick="testEndpoint('/api/health')">Health Check</button>
+                    <button class="api-button" onclick="testEndpoint('/api/stats')">Статистика</button>
+                    <button class="api-button" onclick="testEndpoint('/health')">Nginx Health</button>
+                    <button class="api-button" onclick="testEndpoint('/status')">Nginx Status</button>
+                </div>
+                <div id="apiResponse" class="response-area" style="display: none;"></div>
+            </div>
+
+            <!-- Информация о проекте -->
+            <div class="card">
+                <h3>📚 Компоненты проекта</h3>
+                <ul style="text-align: left; line-height: 1.8;">
+                    <li><strong>Nginx:</strong> Reverse proxy + статические файлы</li>
+                    <li><strong>Flask API:</strong> Backend для работы с БД</li>
+                    <li><strong>PostgreSQL:</strong> База данных для логирования</li>
+                    <li><strong>Prometheus:</strong> Сбор метрик</li>
+                    <li><strong>Grafana:</strong> Визуализация мониторинга</li>
+                    <li><strong>Ansible:</strong> Автоматизация развертывания</li>
+                    <li><strong>Docker:</strong> Контейнеризация сервисов</li>
+                </ul>
+            </div>
+
+            <!-- Мониторинг -->
+            <div class="card">
+                <h3>📊 Мониторинг в реальном времени</h3>
+                <div id="metricsInfo">
+                    <p>🔄 <strong>Активные подключения:</strong> <span id="activeConnections">—</span></p>
+                    <p>📈 <strong>Запросов обработано:</strong> <span id="totalRequests">—</span></p>
+                    <p>⏱️ <strong>Uptime:</strong> <span id="uptime">—</span></p>
+                </div>
+                <button class="api-button" onclick="refreshMetrics()">🔄 Обновить метрики</button>
+            </div>
         </div>
 
         <div class="links">
-            <a href="/health">Health Check</a>
-            <a href="/status">Nginx Status</a>
-            <a href="http://localhost:3000" target="_blank">Grafana</a>
-            <a href="http://localhost:9090" target="_blank">Prometheus</a>
+            <a href="/health" target="_blank">
+                <span>✅</span> Health Check
+            </a>
+            <a href="/status" target="_blank">
+                <span>📊</span> Nginx Status
+            </a>
+            <a href="http://localhost:3000" target="_blank">
+                <span>📈</span> Grafana
+            </a>
+            <a href="http://localhost:9090" target="_blank">
+                <span>🎯</span> Prometheus
+            </a>
+            <a href="http://localhost:5000/api/health" target="_blank">
+                <span>🔧</span> API Health
+            </a>
         </div>
     </div>
 
     <script>
-        document.getElementById('time').textContent = new Date().toLocaleString('ru-RU');
+        // Обновление времени
+        function updateTime() {
+            document.getElementById('currentTime').textContent = new Date().toLocaleString('ru-RU');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Проверка статуса сервисов при загрузке
+        window.addEventListener('load', function() {
+            checkSystemStatus();
+            refreshStats();
+            refreshMetrics();
+        });
+
+        // Функция для логирования посещения
+        async function logVisit() {
+            const responseDiv = document.getElementById('dbResponse');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="loading"></div> Записываем посещение...';
+
+            try {
+                const response = await fetch('/api/visit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<div class="success-message">✅ Посещение записано успешно!<br>Время: ${data.timestamp}</div>`;
+                    setTimeout(() => refreshStats(), 1000); // Обновляем статистику через секунду
+                } else {
+                    responseDiv.innerHTML = `<div class="error-message">❌ Ошибка: ${data.error}</div>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error-message">❌ Ошибка сети: ${error.message}</div>`;
+            }
+        }
+
+        // Функция для получения статистики
+        async function getStats() {
+            const responseDiv = document.getElementById('dbResponse');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="loading"></div> Загружаем статистику...';
+
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    let html = `<div class="success-message">📊 Статистика загружена</div>`;
+                    html += `<p><strong>Всего посещений:</strong> ${data.total_visits}</p>`;
+                    
+                    if (data.recent_visits && data.recent_visits.length > 0) {
+                        html += `<p><strong>Последние визиты:</strong></p>`;
+                        html += `<table class="stats-table"><tr><th>IP</th><th>Время</th><th>User Agent</th></tr>`;
+                        data.recent_visits.slice(0, 5).forEach(visit => {
+                            const date = new Date(visit.visit_time).toLocaleString('ru-RU');
+                            const userAgent = visit.user_agent ? visit.user_agent.substring(0, 30) + '...' : 'Unknown';
+                            html += `<tr><td>${visit.ip_address}</td><td>${date}</td><td>${userAgent}</td></tr>`;
+                        });
+                        html += `</table>`;
+                    }
+                    
+                    responseDiv.innerHTML = html;
+                } else {
+                    responseDiv.innerHTML = `<div class="error-message">❌ Ошибка: ${data.error}</div>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error-message">❌ Ошибка сети: ${error.message}</div>`;
+            }
+        }
+
+        // Функция для проверки здоровья БД
+        async function checkDbHealth() {
+            const responseDiv = document.getElementById('dbResponse');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div class="loading"></div> Проверяем подключение к БД...';
+
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    let statusClass = data.status === 'healthy' ? 'success-message' : 'error-message';
+                    let statusIcon = data.status === 'healthy' ? '✅' : '❌';
+                    
+                    responseDiv.innerHTML = `
+                        <div class="${statusClass}">
+                            ${statusIcon} API Status: ${data.status}<br>
+                            🗄️ Database: ${data.database}<br>
+                            ⏰ Timestamp: ${new Date(data.timestamp).toLocaleString('ru-RU')}
+                        </div>
+                    `;
+                } else {
+                    responseDiv.innerHTML = `<div class="error-message">❌ API недоступен</div>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error-message">❌ Ошибка: ${error.message}</div>`;
+            }
+        }
+
+        // Функция для тестирования endpoints
+        async function testEndpoint(endpoint) {
+            const responseDiv = document.getElementById('apiResponse');
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = `<div class="loading"></div> Тестируем ${endpoint}...`;
+
+            try {
+                const response = await fetch(endpoint);
+                const contentType = response.headers.get('content-type');
+                
+                let data;
+                if (contentType && contentType.includes('application/json')) {
+                    data = await response.json();
+                    data = JSON.stringify(data, null, 2);
+                } else {
+                    data = await response.text();
+                }
+                
+                const statusClass = response.ok ? 'success-message' : 'error-message';
+                const statusIcon = response.ok ? '✅' : '❌';
+                
+                responseDiv.innerHTML = `
+                    <div class="${statusClass}">
+                        ${statusIcon} ${endpoint} - Status: ${response.status}
+                    </div>
+                    <pre style="white-space: pre-wrap; margin-top: 10px;">${data}</pre>
+                `;
+            } catch (error) {
+                responseDiv.innerHTML = `<div class="error-message">❌ Ошибка: ${error.message}</div>`;
+            }
+        }
+
+        // Обновление статистики посещений
+        async function refreshStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                document.getElementById('totalVisits').textContent = data.total_visits || 'Нет данных';
+                
+                const recentVisitsDiv = document.getElementById('recentVisits');
+                if (data.recent_visits && data.recent_visits.length > 0) {
+                    let html = '<table class="stats-table" style="font-size: 11px;"><tr><th>IP</th><th>Время</th></tr>';
+                    data.recent_visits.slice(0, 3).forEach(visit => {
+                        const date = new Date(visit.visit_time).toLocaleString('ru-RU');
+                        html += `<tr><td>${visit.ip_address}</td><td>${date}</td></tr>`;
+                    });
+                    html += '</table>';
+                    recentVisitsDiv.innerHTML = html;
+                } else {
+                    recentVisitsDiv.innerHTML = 'Нет данных о посещениях';
+                }
+            } catch (error) {
+                document.getElementById('totalVisits').textContent = 'Ошибка загрузки';
+                document.getElementById('recentVisits').innerHTML = 'Ошибка загрузки данных';
+            }
+        }
+
+        // Проверка статуса системы
+        async function checkSystemStatus() {
+            const statusIndicator = document.getElementById('systemStatus');
+            
+            // Проверка Nginx
+            try {
+                const nginxResponse = await fetch('/health');
+                document.getElementById('nginxStatus').textContent = nginxResponse.ok ? '✅ Работает' : '❌ Недоступен';
+            } catch {
+                document.getElementById('nginxStatus').textContent = '❌ Недоступен';
+            }
+            
+            // Проверка API
+            try {
+                const apiResponse = await fetch('/api/health');
+                const apiData = await apiResponse.json();
+                document.getElementById('apiStatus').textContent = apiResponse.ok ? '✅ Работает' : '❌ Недоступен';
+                document.getElementById('dbStatus').textContent = 
+                    apiData.database === 'connected' ? '✅ Подключена' : '❌ Недоступна';
+            } catch {
+                document.getElementById('apiStatus').textContent = '❌ Недоступен';
+                document.getElementById('dbStatus').textContent = '❌ Недоступна';
+            }
+            
+            // Проверка мониторинга
+            try {
+                const prometheusResponse = await fetch('http://localhost:9090/api/v1/status/config');
+                document.getElementById('monitoringStatus').textContent = 
+                    prometheusResponse.ok ? '✅ Активен' : '❌ Недоступен';
+                statusIndicator.className = 'status-indicator';
+            } catch {
+                document.getElementById('monitoringStatus').textContent = '❌ Недоступен';
+                statusIndicator.className = 'status-indicator error';
+            }
+        }
+
+        // Обновление метрик
+        async function refreshMetrics() {
+            try {
+                const response = await fetch('/status');
+                const text = await response.text();
+                
+                // Парсинг статистики nginx
+                const activeMatch = text.match(/Active connections:\s*(\d+)/);
+                const requestsMatch = text.match(/(\d+)\s+(\d+)\s+(\d+)/);
+                
+                if (activeMatch) {
+                    document.getElementById('activeConnections').textContent = activeMatch[1];
+                }
+                
+                if (requestsMatch) {
+                    document.getElementById('totalRequests').textContent = requestsMatch[3];
+                }
+                
+                // Время работы (примерное)
+                const uptime = Math.floor(Date.now() / 1000 / 60); // минуты с момента загрузки
+                document.getElementById('uptime').textContent = `${uptime} мин`;
+                
+            } catch (error) {
+                document.getElementById('activeConnections').textContent = 'Ошибка';
+                document.getElementById('totalRequests').textContent = 'Ошибка';
+            }
+        }
+
+        // Автоматическое обновление каждые 30 секунд
+        setInterval(() => {
+            refreshStats();
+            refreshMetrics();
+        }, 30000);
+
+        // Логируем посещение при загрузке страницы
+        window.addEventListener('load', () => {
+            setTimeout(logVisit, 2000); // Логируем через 2 секунды после загрузки
+        });
     </script>
 </body>
 </html>
